@@ -6,6 +6,7 @@ export default function TabsLayout() {
   return (
     <NativeTabs>
         <NativeTabs.Trigger name="(home)">
+          <NativeTabs.Trigger.Icon sf="house" />
             <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
     </NativeTabs>
