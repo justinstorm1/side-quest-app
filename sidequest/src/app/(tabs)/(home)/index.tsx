@@ -1,10 +1,16 @@
-import { View, Text } from 'react-native'
+import { View, Text, Pressable } from 'react-native'
 import React from 'react'
+import { useAuthActions } from '@convex-dev/auth/react'
 
 export default function index() {
+  const { signOut } = useAuthActions();
+
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+    <View className='flex-1 items-center justify-center'>
       <Text>index</Text>
+      <Pressable onPress={async () => await signOut()}>
+        <Text>Sign Out</Text>
+      </Pressable>
     </View>
   )
 }

@@ -4,40 +4,61 @@ import { ConvexReactClient } from "convex/react";
 import { ConvexAuthProvider, useConvexAuth } from "@convex-dev/auth/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import './global.css';
+import * as SecureStore from 'expo-secure-store'
+import { Platform } from "react-native";
+
+
+const storage = {
+  async getItem(key: string) {
+    if (Platform.OS === "web") {
+      return localStorage.getItem(key);
+    }
+    return AsyncStorage.getItem(key);
+  },
+
+  async setItem(key: string, value: string) {
+    if (Platform.OS === "web") {
+      localStorage.setItem(key, value);
+      return;
+    }
+    await AsyncStorage.setItem(key, value);
+  },
+
+  async removeItem(key: string) {
+    if (Platform.OS === "web") {
+      localStorage.removeItem(key);
+      return;
+    }
+    await AsyncStorage.removeItem(key);
+  },
+};
 
 const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
 
 function InitialLayout() {
   const { isAuthenticated, isLoading } = useConvexAuth();
-  const router = useRouter();
-  const segments = useSegments();
-
-  useLayoutEffect(() => {
-    if (isLoading) return;
-
-    const inAuthGroup = segments[0] === "(auth)";
-    const inTabsGroup = segments[0] === "(tabs)";
-
-    if (isAuthenticated && inAuthGroup) {
-      router.replace("/(tabs)/(home)");
-    } else if (!isAuthenticated && inTabsGroup) {
-      router.replace("/(auth)/sign-in");
-    }
-  }, [isAuthenticated, isLoading, segments]);
-
-  if (isLoading) return null;
 
   return (
     <Stack>
-      <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-      <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      <Stack.Protected guard={!isAuthenticated}>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Protected guard={!!isAuthenticated}>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+      </Stack.Protected>
     </Stack>
   );
 }
 
+function replaceURL(url: string) {
+  if (typeof window !== "undefined") {
+    window.history.replaceState({}, "", url);
+  }
+}
+
 export default function RootLayout() {
   return (
-    <ConvexAuthProvider client={convex} storage={AsyncStorage}>
+    <ConvexAuthProvider client={convex} storage={storage} replaceURL={replaceURL}>
       <InitialLayout />
     </ConvexAuthProvider>
   );
