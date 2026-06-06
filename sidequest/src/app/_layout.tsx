@@ -4,7 +4,7 @@ import { ConvexReactClient } from "convex/react";
 import { ConvexAuthProvider, useConvexAuth } from "@convex-dev/auth/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import './global.css';
-import * as SecureStore from 'expo-secure-store'
+import * as NavigationBar from 'expo-navigation-bar';
 import { Platform } from "react-native";
 
 
@@ -37,6 +37,15 @@ const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
 
 function InitialLayout() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+
+  useEffect(() => {
+    const hideNavBar = async () => {
+      await NavigationBar.NavigationBar.setHidden(true);
+    };
+
+    hideNavBar();
+  }, []);
+
 
   return (
     <Stack>
