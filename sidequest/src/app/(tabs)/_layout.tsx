@@ -20,6 +20,10 @@ export default function TabsLayout() {
           <NativeTabs.Trigger.Icon sf="house.fill" md={"home"} />
             <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="(messages)">
+          <NativeTabs.Trigger.Icon sf="message.fill" md={"message"} />
+            <NativeTabs.Trigger.Label>Messages</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
         <NativeTabs.Trigger name="(profile)">
           <NativeTabs.Trigger.Icon sf="person.fill" md={"person"}/>
             <NativeTabs.Trigger.Label>Profile</NativeTabs.Trigger.Label>

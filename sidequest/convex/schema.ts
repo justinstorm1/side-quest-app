@@ -30,7 +30,10 @@ export default defineSchema({
             v.literal("medium"),
             v.literal("hard"),
         )),
-        location: v.optional(v.string()),
+        location: v.optional(v.object({
+            latitude: v.number(),
+            longitude: v.number() 
+        })),
         needsLocationVerification: v.boolean(),
         locationThresholdMiles: v.optional(v.number()),
         needsImageVerification: v.boolean(),

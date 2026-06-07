@@ -74,12 +74,12 @@ export default function ProfileScreen({ userId }: { userId: Id<"users"> }) {
                 </View>
             </View>
 
-            <View className='mx-auto gap-7 flex-row items-center mt-5'>
-                <Text className='font-bold text-lg dark:text-white'>🌎 #{globalRank}</Text>
-                <View className='w-[1] h-[12] bg-gray-500 rounded-full' />
-                <Text className='font-bold text-lg dark:text-white'>{user.points}⚡️</Text>
-                <View className='w-[1] h-[12] bg-gray-500 rounded-full' />
-                <Text className='font-bold text-lg dark:text-white'>Level {level}</Text>
+            <View className='mt-5' style={{ width: 175, alignSelf: 'center' }}>
+                <View className='flex-row items-center justify-between'>
+                    <Text className='font-bold text-lg dark:text-white'>🌎 #{globalRank}</Text>
+                    <Text className='font-bold text-2xl dark:text-white text-center'>{user.points}⚡️</Text>
+                    <Text className='font-bold text-lg dark:text-white'>Lv.{level}</Text>
+                </View>
             </View>
 
 
