@@ -117,3 +117,20 @@ export const unfollowUser = mutation({
     return { success: true };
   }
 })
+
+export const getFriends = query({
+  args: {},
+  handler: async (ctx) => {
+    const userId = await getAuthUserId(ctx);
+    if (!userId) return [];
+    const user = await ctx.db.get(userId);
+    if (!user) return [];
+
+    const friendIds = Array.from(new Set([
+      ...(user.following ?? []),
+      ...(user.followers ?? []),
+    ]));
+
+    return await Promise.all(friendIds.map((id) => ctx.db.get(id)));
+  },
+});

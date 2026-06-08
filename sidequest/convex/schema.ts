@@ -38,5 +38,21 @@ export default defineSchema({
         locationThresholdMiles: v.optional(v.number()),
         needsImageVerification: v.boolean(),
         timeThreshold: v.optional(v.number()),
+    }),
+
+     conversations: defineTable({
+        participants: v.array(v.id("users")),
+        lastMessage: v.optional(v.string()),
+        lastMessageTime: v.optional(v.float64()),
+        lastMessageSenderId: v.optional(v.id("users")),
     })
+        .index("by_participants", ["participants"]),
+
+    messages: defineTable({
+        conversationId: v.id("conversations"),
+        senderId: v.id("users"),
+        text: v.string(),
+        readBy: v.array(v.id("users")),
+    })
+        .index("by_conversation", ["conversationId"]),
 })
