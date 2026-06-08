@@ -25,6 +25,20 @@ export default function profile() {
     });
   };
 
+  const signOutAlert = () => {
+    Alert.alert("Sign Out", "Are you sure you want to sign out?", [
+      {
+        text: "Cancel",
+        style: 'cancel'
+      },
+      {
+        text: "Sign Out",
+        style: "destructive",
+        onPress: signOut
+      }
+    ])
+  }
+
    return (
     <>
       <Stack.Screen 
@@ -33,41 +47,29 @@ export default function profile() {
           headerTitle: ""
         }}
       />
-      {Platform.OS === 'ios' && (
+      {Platform.OS === 'ios' ? (
         <Stack.Toolbar placement='right'>
           <Stack.Toolbar.Button icon={'square.and.arrow.up'} onPress={shareProfile} />
           <Stack.Toolbar.Menu icon={'ellipsis'}>
             <Stack.Toolbar.MenuAction 
               destructive 
               icon={'rectangle.portrait.and.arrow.forward'} 
-              onPress={() => {
-                Alert.alert("Sign Out", "Are you sure you want to sign out?", [
-                  {
-                    text: "Cancel",
-                    style: 'cancel'
-                  },
-                  {
-                    text: "Sign Out",
-                    style: "destructive",
-                    onPress: signOut
-                  }
-                ])
-              }}
+              onPress={signOutAlert}
             >
               Sign Out
             </Stack.Toolbar.MenuAction>
           </Stack.Toolbar.Menu>
         </Stack.Toolbar>
+      ) : (
+        <Pressable 
+          className='z-[100] absolute top-3 right-3 items-center justify-center w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-800'
+          onPress={signOutAlert}
+        >
+          <Ionicons name='log-out-outline' color={'#ff0000'} size={22} />
+        </Pressable>
       )}
       <ScrollView className='bg-slate-100 dark:bg-slate-900' style={{ paddingTop: Platform.OS == "android" ? insets.top + 8 : 0 }} contentInsetAdjustmentBehavior="automatic">
           <ProfileScreen userId={user?._id as Id<"users">} />
-          {/* <Pressable className='absolute right-5' onPress={signOut}>
-            <Ionicons
-              name='log-out-outline'
-              color={'#e84545'}
-              size={24}
-            />
-          </Pressable> */}
       </ScrollView>
     </>
     )

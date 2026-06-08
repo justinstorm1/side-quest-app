@@ -6,7 +6,6 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import './global.css';
 import * as NavigationBar from 'expo-navigation-bar';
 import { Appearance, Platform } from "react-native";
-import { colorScheme, useColorScheme } from "nativewind";
 import { KeyboardProvider } from "react-native-keyboard-controller";
 
 
@@ -68,32 +67,11 @@ function replaceURL(url: string) {
 }
 
 export default function RootLayout() {
-  const { colorScheme: scheme } = useColorScheme();
-
-  useEffect(() => {
-    colorScheme.set('system');
-  }, []);
-
-  // useEffect(() => {
-  //   const current = Appearance.getColorScheme();
-  //   colorScheme.set(current as 'light' | 'dark' ?? 'light');
-  // }, []);
-
-  // useEffect(() => {
-  //   const sub = Appearance.addChangeListener(({ colorScheme: next }) => {
-  //     colorScheme.set(next as "light" | 'dark' ?? 'light');
-  //   });
-  //   return () => sub.remove();
-  // }, []);
-
-
   return (
     <KeyboardProvider>
-      <ThemeProvider value={scheme === "dark" ? DarkTheme : DefaultTheme}>
-        <ConvexAuthProvider client={convex} storage={storage} replaceURL={replaceURL}>
-          <InitialLayout />
-        </ConvexAuthProvider>
-      </ThemeProvider>
+      <ConvexAuthProvider client={convex} storage={storage} replaceURL={replaceURL}>
+        <InitialLayout />
+      </ConvexAuthProvider>
     </KeyboardProvider>
   );
 }
