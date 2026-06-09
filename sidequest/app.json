@@ -25,7 +25,12 @@
         "android.permission.ACCESS_FINE_LOCATION",
         "android.permission.RECORD_AUDIO"
       ],
-      "package": "com.justinstorm1.sidequest"
+      "package": "com.justinstorm1.sidequest",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyA7EktTl8ukr6UD0nwvoF6cVxrkmdfBtF4"
+        }
+      }
     },
     "web": {
       "output": "static",

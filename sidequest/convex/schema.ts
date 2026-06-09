@@ -4,6 +4,19 @@ import { v } from "convex/values";
 
 export default defineSchema({
     ...authTables,
+
+    group: defineTable({
+        leaderId: v.id("users"),
+        joinCode: v.string(),
+        name: v.string(),
+        description: v.optional(v.string()),
+        icon: v.optional(v.string()),
+        members: v.array(v.id("users")),
+    })
+    .index("by_member", ["members"])
+    .index("by_join_code", ["joinCode"]),
+    
+    
     users: defineTable({
         email: v.optional(v.string()),
         emailVerificationTime: v.optional(v.float64()),
@@ -12,6 +25,8 @@ export default defineSchema({
         name: v.optional(v.string()),
         phone: v.optional(v.string()),
         phoneVerificationTime: v.optional(v.float64()),
+        groupId: v.optional(v.id("group")),
+        isGroupLeader: v.optional(v.boolean()),
         icon: v.optional(v.string()),
         points: v.optional(v.number()),
         following: v.optional(v.array(v.id("users"))),

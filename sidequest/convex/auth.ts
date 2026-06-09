@@ -11,7 +11,6 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
           id: githubInfo.id.toString(),
           name: githubInfo.name,
           email: githubInfo.email,
-          points: 0
         }
       }
     }), 
@@ -24,7 +23,6 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
           id: appleInfo.sub,
           name: name,
           email: appleInfo.email,
-          points: 0,
         };
       },
     }), 
@@ -33,7 +31,6 @@ export const { auth, signIn, signOut, store, isAuthenticated } = convexAuth({
         id: googleInfo.sub,
         name: googleInfo.name,
         email: googleInfo.email,
-        points: 0,
       })
     })
   ],

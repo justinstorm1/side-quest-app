@@ -1,9 +1,8 @@
-import { View, Text } from 'react-native'
-import React from 'react'
 import { NativeTabs } from 'expo-router/unstable-native-tabs'
 import Onboarding from '@/components/Onboarding';
 import { useQuery } from 'convex/react';
 import { api } from '../../../convex/_generated/api';
+import JoinGroup from '@/components/JoinGroup';
 
 export default function TabsLayout() {
   const user = useQuery(api.users.currentUser);
@@ -12,6 +11,8 @@ export default function TabsLayout() {
 
   if (!user?.name || !user?.icon) {
     return <Onboarding />;
+  } else if (!user.groupId) {
+    return <JoinGroup />
   }
     
   return (
@@ -19,6 +20,10 @@ export default function TabsLayout() {
         <NativeTabs.Trigger name="(home)">
           <NativeTabs.Trigger.Icon sf="house.fill" md={"home"} />
             <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
+        </NativeTabs.Trigger>
+        <NativeTabs.Trigger name="(rankings)">
+          <NativeTabs.Trigger.Icon sf="chart.bar.fill" md={"bar_chart"} />
+            <NativeTabs.Trigger.Label>Rankings</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="(messages)">
           <NativeTabs.Trigger.Icon sf="message.fill" md={"message"} />

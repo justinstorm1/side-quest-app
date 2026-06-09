@@ -1,12 +1,13 @@
 import { useEffect, useLayoutEffect } from "react";
 import { DarkTheme, DefaultTheme, Stack, ThemeProvider, useRouter, useSegments } from "expo-router";
-import { ConvexReactClient } from "convex/react";
+import { ConvexReactClient, useQueries, useQuery } from "convex/react";
 import { ConvexAuthProvider, useConvexAuth } from "@convex-dev/auth/react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import './global.css';
 import * as NavigationBar from 'expo-navigation-bar';
 import { Appearance, Platform } from "react-native";
 import { KeyboardProvider } from "react-native-keyboard-controller";
+import { api } from "../../convex/_generated/api";
 
 
 const storage = {
@@ -38,6 +39,7 @@ const convex = new ConvexReactClient(process.env.EXPO_PUBLIC_CONVEX_URL!);
 
 function InitialLayout() {
   const { isAuthenticated, isLoading } = useConvexAuth();
+  const isInGroup = useQuery(api.users.currentUser)?.groupId;
 
   useEffect(() => {
     const hideNavBar = async () => {
@@ -54,7 +56,7 @@ function InitialLayout() {
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       </Stack.Protected>
       <Stack.Protected guard={!!isAuthenticated}>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="(tabs)" options={{ headerTitle: "", headerShown: false }} />
       </Stack.Protected>
     </Stack>
   );
