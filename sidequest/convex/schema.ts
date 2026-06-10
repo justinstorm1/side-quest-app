@@ -55,19 +55,31 @@ export default defineSchema({
         timeThreshold: v.optional(v.number()),
     }),
 
-     conversations: defineTable({
-        participants: v.array(v.id("users")),
-        lastMessage: v.optional(v.string()),
-        lastMessageTime: v.optional(v.float64()),
-        lastMessageSenderId: v.optional(v.id("users")),
-    })
-        .index("by_participants", ["participants"]),
+    //  conversations: defineTable({
+    //     participants: v.array(v.id("users")),
+    //     lastMessage: v.optional(v.string()),
+    //     lastMessageTime: v.optional(v.float64()),
+    //     lastMessageSenderId: v.optional(v.id("users")),
+    // })
+    //     .index("by_participants", ["participants"]),
 
-    messages: defineTable({
-        conversationId: v.id("conversations"),
-        senderId: v.id("users"),
-        text: v.string(),
-        readBy: v.array(v.id("users")),
+    // messages: defineTable({
+    //     conversationId: v.id("conversations"),
+    //     senderId: v.id("users"),
+    //     text: v.string(),
+    //     readBy: v.array(v.id("users")),
+    // })
+    //     .index("by_conversation", ["conversationId"]),
+
+    chats: defineTable({
+        users: v.array(v.id("users")),
+        messages: v.optional(v.array(
+            v.object({
+                userId: v.id("users"),
+                body: v.string(),
+                timeSent: v.float64()
+            })
+        ))
     })
-        .index("by_conversation", ["conversationId"]),
+    .index("by_users", ["users"])
 })
