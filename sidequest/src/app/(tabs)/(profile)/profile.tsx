@@ -9,9 +9,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { useAuthActions } from '@convex-dev/auth/react';
 import { Stack } from 'expo-router';
 import * as Linking from 'expo-linking';
-import * as Jetpack from '@expo/ui/jetpack-compose';
-import settingsIcon from '@expo/material-symbols/settings.xml';
-import signOutIcon from '@expo/material-symbols/logout.xml';
+
+const Jetpack = Platform.OS === 'android' ? require('@expo/ui/jetpack-compose') : null;
+const settingsIcon = Platform.OS === 'android' ? require('@expo/material-symbols/settings.xml') : null;
+const signOutIcon = Platform.OS === 'android' ? require('@expo/material-symbols/logout.xml') : null;
 
 export default function profile() {
   const { signOut } = useAuthActions();
