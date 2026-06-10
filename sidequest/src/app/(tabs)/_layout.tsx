@@ -25,9 +25,9 @@ export default function TabsLayout() {
           <NativeTabs.Trigger.Icon sf="chart.bar.fill" md={"bar_chart"} />
             <NativeTabs.Trigger.Label>Rankings</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
-        <NativeTabs.Trigger name="(messages)">
+        <NativeTabs.Trigger name="(chats)">
           <NativeTabs.Trigger.Icon sf="message.fill" md={"message"} />
-            <NativeTabs.Trigger.Label>Messages</NativeTabs.Trigger.Label>
+            <NativeTabs.Trigger.Label>Chats</NativeTabs.Trigger.Label>
         </NativeTabs.Trigger>
         <NativeTabs.Trigger name="(profile)">
           <NativeTabs.Trigger.Icon sf="person.fill" md={"person"}/>

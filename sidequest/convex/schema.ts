@@ -72,6 +72,7 @@ export default defineSchema({
     //     .index("by_conversation", ["conversationId"]),
 
     chats: defineTable({
+        name: v.optional(v.string()),
         users: v.array(v.id("users")),
         messages: v.optional(v.array(
             v.object({
@@ -79,7 +80,11 @@ export default defineSchema({
                 body: v.string(),
                 timeSent: v.float64()
             })
-        ))
+        )),
+        type: v.union(
+            v.literal("direct"),
+            v.literal("group")
+        )
     })
     .index("by_users", ["users"])
 })

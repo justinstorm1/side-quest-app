@@ -12,8 +12,12 @@ import { useMutation, useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { KeyboardStickyView } from 'react-native-keyboard-controller';
+import { router } from 'expo-router';
 
 export default function JoinGroup() {
+
+  const user = useQuery(api.users.currentUser);
+
   const insets = useSafeAreaInsets();
 
   const [joinCode, setJoinCode] = useState('');
@@ -66,17 +70,25 @@ export default function JoinGroup() {
 
   return (
     <View className='flex-1 bg-[#080810]'>
-        <View className="absolute -top-20 -left-16 w-72 h-72 rounded-full bg-[#1a0a3e] opacity-80" />
-        <View className="absolute bottom-16 -right-20 w-60 h-60 rounded-full bg-[#0d1f3e] opacity-60" />
+      <View className="absolute -top-20 -left-16 w-72 h-72 rounded-full bg-[#1a0a3e] opacity-80" />
+      <View className="absolute bottom-16 -right-20 w-60 h-60 rounded-full bg-[#0d1f3e] opacity-60" />
+
+      <Pressable 
+        className='z-[50] absolute top-3 right-3 bg-slate-200 dark:bg-slate-800 px-3 py-2 rounded-full'
+        onPress={() => router.push('/create-group')}
+      >
+        <Text className='dark:text-white font-semibold'>Create Group</Text>
+      </Pressable>
+
       <KeyboardStickyView
         className="flex-1"
-        offset={{ opened: 200 }}
+        offset={{ opened: 200, closed: 0 }}
       >
         
         {/* Background blobs */}
 
         <View
-          className="flex-1 justify-center px-6"
+          className="flex-1 justify-center px-6 py-6"
         >
           {/* Icon */}
           <View className="items-center mb-8">
@@ -160,7 +172,7 @@ export default function JoinGroup() {
             />
 
             {/* Progress pills */}
-            <View className="flex-row justify-center gap-1.5 mt-3">
+            <View className="flex-row justify-center gap-1.5 my-3">
               {Array.from({ length: 6 }).map((_, i) => (
                 <View
                   key={i}
@@ -226,6 +238,7 @@ export default function JoinGroup() {
           </Text>
         </View>
       </KeyboardStickyView>
+      
     </View>
   );
 }
