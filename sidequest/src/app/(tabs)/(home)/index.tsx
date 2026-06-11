@@ -247,27 +247,29 @@ export default function Index() {
   const s2 = useAnimatedStyle(() => ({ opacity: a2.value, transform: [{ translateY: (1 - a2.value) * -8  }] }));
 
   return (
-    <View style={{ flex: 1, backgroundColor: t.bgDeep }}>
+    // <View style={{ flex: 1 }}>
 
-      {/* ── Background glow blobs ── */}
-      <View style={{
-        position: 'absolute', top: -100, right: -100,
-        width: 320, height: 320, borderRadius: 160,
-        backgroundColor: isDark ? 'rgba(124,58,237,0.07)' : 'rgba(124,58,237,0.05)',
-      }} />
-      <View style={{
-        position: 'absolute', top: 350, left: -120,
-        width: 260, height: 260, borderRadius: 130,
-        backgroundColor: isDark ? 'rgba(109,40,217,0.04)' : 'rgba(109,40,217,0.03)',
-      }} />
+    //   {/* ── Background glow blobs ── */}
+    //   <View style={{
+    //     position: 'absolute', top: -100, right: -100,
+    //     width: 320, height: 320, borderRadius: 160,
+    //     backgroundColor: isDark ? 'rgba(124,58,237,0.07)' : 'rgba(124,58,237,0.05)',
+    //   }} />
+    //   <View style={{
+    //     position: 'absolute', top: 350, left: -120,
+    //     width: 260, height: 260, borderRadius: 130,
+    //     backgroundColor: isDark ? 'rgba(109,40,217,0.04)' : 'rgba(109,40,217,0.03)',
+    //   }} />
 
       <ScrollView
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{
-          paddingTop: insets.top + 14,
-          paddingBottom: insets.bottom + 56,
+          paddingTop: Platform.OS !== 'ios' ? insets.top + 16 : 16,
+          paddingBottom: Platform.OS !== 'ios' ? insets.bottom + 32 : insets.bottom,
           gap: 0,
         }}
+        style={{ backgroundColor: t.bgDeep }}
+        contentInsetAdjustmentBehavior='never'
       >
 
         {/* ════════════════════════════════════════
@@ -524,6 +526,6 @@ export default function Index() {
         </View>
 
       </ScrollView>
-    </View>
+    // </View>
   );
 }

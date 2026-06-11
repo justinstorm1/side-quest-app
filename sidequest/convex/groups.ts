@@ -36,6 +36,12 @@ export const createGroup = mutation({
         await ctx.db.patch(leader._id, {
             groupId
         });
+        
+        await ctx.db.insert("chats", {
+            users: [leaderId],
+            name: `${name} Group Chat`,
+            type: "group"
+        })
 
         return { success: true };
     }
@@ -76,9 +82,47 @@ export const leaveGroup = mutation({
         const user = await ctx.db.get(userId);
         if (!user) return null;
 
+        const groupId = user.groupId;
+        if (!groupId) return null;
+
+        const group = await ctx.db.get(groupId);
+        if (!group) return null;
+
         await ctx.db.patch(user._id, {
             groupId: undefined
         });
+
+        await ctx.db.patch(group._id, {
+            members: group.members.filter((memberId) => memberId !== user._id)
+        });
+
+        return { success: true };
+    }
+})
+
+export const deleteGroup = mutation({
+    handler: async (ctx) => {
+        const userId = await getAuthUserId(ctx);
+        if (!userId) return null;
+        const user = await ctx.db.get(userId);
+        if (!user) return null;
+
+        const groupId = user.groupId;
+        if (!groupId) return null;
+
+        const group = await ctx.db.get(groupId);
+        if (!group) return null;
+
+        for (let i = 0; i < group.members.length; i++) {
+            const groupUser = await ctx.db.get(group.members[i]);
+            if (!groupUser) continue;
+
+            await ctx.db.patch(groupUser._id, {
+                groupId: undefined
+            });
+        }
+
+        await ctx.db.delete(group._id);
 
         return { success: true };
     }

@@ -84,7 +84,8 @@ export default defineSchema({
         type: v.union(
             v.literal("direct"),
             v.literal("group")
-        )
+        ),
+        groupId: v.optional(v.id("groups"))
     })
     .index("by_users", ["users"])
 })

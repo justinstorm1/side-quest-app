@@ -47,13 +47,13 @@ export default function CreateGroup() {
                 headerTransparent: true,
                 headerBackButtonDisplayMode: "minimal",
                 headerTintColor: isDark ? '#fff' : '#000',
-                headerBackground: () => (
+                headerBackground: Platform.OS !== "ios" ? () => (
                     <BlurView 
                         style={StyleSheet.absoluteFill}
                         intensity={80}
                         tint={isDark ? 'dark' : 'light'}
                     />
-                ),
+                ) : undefined,
             }}
         />
         <View className="flex-1 bg-slate-950">
@@ -71,25 +71,25 @@ export default function CreateGroup() {
 
             {/* Icon Picker */}
             <View className="items-center gap-3">
-            <TouchableOpacity
-                onPress={() => setShowEmojiPicker(v => !v)}
-                className="w-20 h-20 rounded-full bg-indigo-950 border-2 border-dashed border-indigo-400 items-center justify-center"
-            >
-                <Text style={{ fontSize: 36 }}>{icon}</Text>
-            </TouchableOpacity>
-            <Text className="text-slate-400 text-sm">Tap to choose an icon</Text>
+                <TouchableOpacity
+                    onPress={() => setShowEmojiPicker(v => !v)}
+                    className="w-20 h-20 rounded-full bg-indigo-950 border-2 border-dashed border-indigo-400 items-center justify-center"
+                >
+                    <Text style={{ fontSize: 36 }}>{icon}</Text>
+                </TouchableOpacity>
+                <Text className="text-slate-400 text-sm">Tap to choose an icon</Text>
             </View>
 
             {showEmojiPicker && (
             <View className="bg-slate-900 rounded-2xl p-3 border border-slate-800">
-                <View className="flex-row flex-wrap gap-1">
+                <View className="flex-row flex-wrap justify-center gap-1">
                 {EMOJIS.map(e => (
                     <TouchableOpacity
-                    key={e}
-                    onPress={() => { setIcon(e); setShowEmojiPicker(false) }}
-                    className={`w-10 h-10 rounded-lg items-center justify-center ${e === icon ? 'bg-indigo-900' : ''}`}
+                        key={e}
+                        onPress={() => { setIcon(e); setShowEmojiPicker(false) }}
+                        className={`w-10 h-10 rounded-lg items-center justify-center ${e === icon ? 'bg-indigo-900' : ''}`}
                     >
-                    <Text style={{ fontSize: 22 }}>{e}</Text>
+                        <Text style={{ fontSize: 22 }}>{e}</Text>
                     </TouchableOpacity>
                 ))}
                 </View>

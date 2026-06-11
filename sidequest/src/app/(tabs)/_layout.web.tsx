@@ -71,17 +71,17 @@ export default function WebTabsLayout() {
           )
         }} 
       />
-        <Tabs.Screen 
-          name='(group)' 
-          options={{ 
-            headerShown: false,
-            title: "Group",
-            href: user._id === group.leaderId ? undefined : null,
-            tabBarIcon: ({ focused, color, size }) => (
-              <Ionicons name='people-outline' color={color} size={size} />
-            )
-          }} 
-        />
+      <Tabs.Screen 
+        name='(group)' 
+        options={{ 
+          headerShown: false,
+          title: "Group",
+          href: user._id === group?.leaderId ? undefined : null,
+          tabBarIcon: ({ focused, color, size }) => (
+            <Ionicons name='people-outline' color={color} size={size} />
+          )
+        }} 
+      />
       <Tabs.Screen 
         name='(profile)' 
         options={{ 

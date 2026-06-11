@@ -57,7 +57,7 @@ export default function profile() {
       />
       {Platform.OS === 'ios' && (
         <Stack.Toolbar placement='right'>
-          <Stack.Toolbar.Button icon={'square.and.arrow.up'} onPress={shareProfile} />
+          <Stack.Toolbar.Button icon={'square.and.arrow.up'} onPress={shareProfile} separateBackground />
           <Stack.Toolbar.Menu icon={'ellipsis'}>
             <Stack.Toolbar.MenuAction icon={'gearshape'}>
               Settings

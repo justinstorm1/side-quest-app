@@ -73,13 +73,6 @@ export default function JoinGroup() {
       <View className="absolute -top-20 -left-16 w-72 h-72 rounded-full bg-[#1a0a3e] opacity-80" />
       <View className="absolute bottom-16 -right-20 w-60 h-60 rounded-full bg-[#0d1f3e] opacity-60" />
 
-      <Pressable 
-        className='z-[50] absolute top-3 right-3 bg-slate-200 dark:bg-slate-800 px-3 py-2 rounded-full'
-        onPress={() => router.push('/create-group')}
-      >
-        <Text className='dark:text-white font-semibold'>Create Group</Text>
-      </Pressable>
-
       <KeyboardStickyView
         className="flex-1"
         offset={{ opened: 200, closed: 0 }}
@@ -147,7 +140,7 @@ export default function JoinGroup() {
                         shadowRadius: 10,
                       }}
                     >
-                      <Text className="text-2xl font-extrabold text-white">
+                      <Text className="text-3xl font-extrabold text-white">
                         {char}
                       </Text>
                     </View>
@@ -236,6 +229,23 @@ export default function JoinGroup() {
           <Text className="text-[#444466] text-xs text-center mt-5 leading-5">
             Codes are 3 letters + 3 numbers{'\n'}(e.g. ABC123)
           </Text>
+
+          {user?.isGroupLeader && (
+            <View className="flex-row items-center justify-center mt-4 gap-1">
+              <Text className="text-[#444466] text-sm">Don't have a group?</Text>
+              <Pressable onPress={() => router.push('/create-group')}>
+                {({ pressed }) => (
+                  <Text
+                    className="text-[#6c6cff] text-sm font-semibold"
+                    style={{ opacity: pressed ? 0.5 : 1 }}
+                  >
+                    Create one →
+                  </Text>
+                )}
+              </Pressable>
+            </View>
+          )}
+
         </View>
       </KeyboardStickyView>
       
