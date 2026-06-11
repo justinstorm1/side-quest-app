@@ -14,6 +14,8 @@ export const createGroup = mutation({
         const leader = await ctx.db.get(leaderId);
         if (!leader) return null;
 
+        if (!leader.isGroupLeader) return null;
+
         const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const numbers = "0123456789";
         let joinCode = "";
